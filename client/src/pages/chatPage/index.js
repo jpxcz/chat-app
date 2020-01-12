@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { connect } from 'react-redux';
 import Finder from './chatFinder';
 import Chat from './currentChat';
@@ -8,28 +8,29 @@ import './Chats.scss';
 const ChatPage = (props) => {
   const [currentChat, setCurrentChat] = useState(null); // current visible chat
   const [conversation, setConversation] = useState([]);
+  const [chatList, setChatList] = useState([]);
   useEffect(() => {
     Socket.emit('attach-socket', props.user);
-
+    Socket.on("chat-list", handleChatList);
   }, []);
 
   useEffect(() => {
     Socket.on('message', data => {
-      console.log(data);
-      console.log(currentChat);
-      console.log(data.chatId === currentChat)
       if (data.chatId === currentChat) {
         setConversation(current => [...current, JSON.parse(data.message)])
       }
       // else would leave the posibility to have notification on other followed conversations 
-
     });
   }, [currentChat]);
-  
+
+  const handleChatList = useCallback((data) => setChatList(data))
+    // const [chatList, setChatList] = useState(['1', '2', '3']);
+
+
   const getChat = async (chat) => {
     if (chat !== currentChat) {
       try {
-        const response = await fetch('/api/get-channel', {
+        const response = await fetch('/api/find-channel', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -78,7 +79,7 @@ const ChatPage = (props) => {
     <div className="chats">
       <h2>Welcome {props.user}</h2>
       <div className="chat-window">
-        <Finder setCurrentChat={getChat} />
+        <Finder setCurrentChat={getChat} chatList={chatList} />
         <Chat chat={currentChat} handleSendText={sendText} conversation={conversation} />
       </div>
     </div>

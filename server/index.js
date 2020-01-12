@@ -8,11 +8,34 @@ app.use(bodyParser());
 
 const sessionManager = new SessionManager();
 const publisher = new Publisher();
+let chatRooms = [];
+
+const server = app.listen(5000, () => {
+  console.log("Listenting on port 5000")
+});
+
+const io = require('socket.io')(server, {
+  path: '/ws',
+}).listen(server);
+
+io.sockets.on('connect', (socket) => {
+  socket.on('attach-socket', (username) => {
+    console.log("Starting attach socket", username)
+    sessionManager.attachSocket(socket, username)
+    socket.emit("chat-list", chatRooms);
+  })
+});
 
 // gets the channel wanted to start consuming
-app.post('/get-channel', (req, res) => {
+app.post('/find-channel', (req, res) => {
   const { username, chatId } = req.body;
   console.log(`${username} wants to connect to chat ${chatId}`);
+
+  if (!chatRooms.includes(chatId)) {
+    chatRooms.push(chatId);
+    chatRooms.sort();
+    io.sockets.emit("chat-list", chatRooms);
+  }
   sessionManager.checkChat(username, chatId).then(() => {
     res.status(200);
     res.json({ msg: `Connected to chat ${chatId}` })
@@ -43,18 +66,3 @@ app.post('/message', async (req, res) => {
     res.sendStatus(400);
   });
 });
-
-const server = app.listen(5000, () => {
-  console.log("Listenting on port 5000")
-});
-
-const io = require('socket.io')(server, {
-  path: '/ws',
-}).listen(server);
-
-io.sockets.on('connect', (socket) => {
-  socket.on('attach-socket', (username) => {
-    console.log("Starting attach socket", username)
-    sessionManager.attachSocket(socket, username)
-  })
-})
