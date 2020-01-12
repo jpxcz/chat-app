@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import PrivateRoute from './privateRoute';
 import Login from '../pages/loginPage';
-import Chats from '../pages/chatsPage';
+import Chats from '../pages/chatPage';
 
 const Routes = () => {
   return (

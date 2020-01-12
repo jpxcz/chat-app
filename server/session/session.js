@@ -8,6 +8,7 @@ class Session {
     this.emitter = new EventEmitter();
     this.consumer = new Consumer(this.emitter);
     this.socket = null;
+    this.consumerEvents = this.consumerEvents.bind(this);
     this.consumerEvents();
   }
 

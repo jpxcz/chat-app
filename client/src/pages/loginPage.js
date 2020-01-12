@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { reduxSetAuthenticated } from '../store/actions';
+import { reduxSetAuthenticated, reduxSetUser } from '../store/actions';
 import { useHistory, useLocation } from "react-router-dom";
 
 const LoginPage = (props) => {
@@ -31,6 +31,8 @@ const LoginPage = (props) => {
       }
 
       props.reduxSetAuthenticated(true);
+      props.reduxSetUser(username);
+      setAuthenticating(false);
       let { from } = { from: { pathname: "/chats" } };
       history.replace(from);
     } catch (err) {
@@ -40,7 +42,6 @@ const LoginPage = (props) => {
     // setAuthenticating(false);
 
   }
-
 
   return (
     <div>
@@ -61,4 +62,4 @@ const LoginPage = (props) => {
   )
 }
 
-export default connect(null, { reduxSetAuthenticated })(LoginPage);
+export default connect(null, { reduxSetAuthenticated, reduxSetUser })(LoginPage);

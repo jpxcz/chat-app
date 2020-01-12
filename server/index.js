@@ -10,7 +10,7 @@ const sessionManager = new SessionManager();
 const publisher = new Publisher();
 
 // gets the channel wanted to start consuming
-app.get('/get-channel', (req, res) => {
+app.post('/get-channel', (req, res) => {
   const { username, chatId } = req.body;
   console.log(`${username} wants to connect to chat ${chatId}`);
   sessionManager.checkChat(username, chatId).then(() => {
@@ -47,10 +47,13 @@ const server = app.listen(5000, () => {
   console.log("Listenting on port 5000")
 });
 
-const io = require('socket.io')(server).listen(server);
+const io = require('socket.io')(server, {
+  path: '/ws',
+}).listen(server);
 
-io.sockets.on('attach-socket', (socket, username) => {
-  sessionManager.attachSocket(socket, username)
+io.sockets.on('connect', (socket) => {
+  socket.on('attach-socket', (username) => {
+    console.log("Starting attach socket", username)
+    sessionManager.attachSocket(socket, username)
+  })
 })
-
-

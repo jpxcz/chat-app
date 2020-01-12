@@ -36,6 +36,7 @@ class Consumer {
         exclusive: true
       });
       this.channel.bindQueue(q.queue, 'messages', queue);
+      console.log("Consumer binded to queue", queue);
       this.channel.consume(q.queue, (msg) => {
         this.emitter.emit('message', msg);
       })

@@ -25,7 +25,7 @@ class SessionManager {
     return new Promise((resolve, reject) => {
       if (!this.sessions[username]) reject(`User ${username} not logged in. Cant attach socket`);
       else {
-        this.sesssions[username].socket = socket;
+        this.sessions[username].socket = socket;
         resolve();
       }
     });
