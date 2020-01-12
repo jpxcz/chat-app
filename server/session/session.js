@@ -1,19 +1,25 @@
 const EventEmitter = require('events');
-const Consumer = require('../consumer');
+const Consumers = require('../consumer');
 
 class Session {
   constructor(username) {
     this.username = username;
     this.chatGroups = {};
     this.emitter = new EventEmitter();
-    this.consumer = new Consumer(this.emitter);
+    this.consumer = new Consumers();
     this.socket = null;
     this.consumerEvents = this.consumerEvents.bind(this);
     this.consumerEvents();
   }
 
+  /**
+   * start consuming the chat we want
+   * @param {string} chatId 
+   */
   consumeChat(chatId) {
-    this.consumer.consumeQueue(chatId);
+    console.log("Session getting chat", chatId)
+    const consumer = this.consumer.getConsumer(chatId);
+    consumer.addEmitter(this.emitter);
   }
 
   consumerEvents() {

@@ -17,6 +17,7 @@ app.post('/get-channel', (req, res) => {
     res.status(200);
     res.json({ msg: `Connected to chat ${chatId}` })
   }).catch((reason) => {
+    console.log(reason);
     res.status(400);
     res.json({ error: `Could not connect to chat` })
   });
