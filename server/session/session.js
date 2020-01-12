@@ -24,10 +24,10 @@ class Session {
   }
 
   consumerEvents() {
-    this.emitter.on('message', (data) => {
-      console.log("New message", data.fields.routingKey, data.content.toString())
+    this.emitter.on('message', ({chatId, data}) => {
+      console.log("New message", chatId, data.content.toString())
       if (this.socket) this.socket.emit('message', {
-        chatId: data.fields.routingKey,
+        chatId: chatId,
         message: data.content.toString()
       });
     });

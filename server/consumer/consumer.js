@@ -20,7 +20,7 @@ class Consumer {
       });
 
       this.channel = await connection.createChannel();
-      this.channel.assertExchange('messages', 'direct', { durable: false });
+      this.channel.assertExchange('messages', 'topic', { durable: false });
       console.log("Channel messages succesfully created");
       this.consumeQueue();
     } catch (err) {
@@ -53,11 +53,11 @@ class Consumer {
           "x-max-length": 50,
         }
       });
-      this.channel.bindQueue(q.queue, 'messages', this.id);
+      this.channel.bindQueue(q.queue, 'messages', `${this.id}.#`);
       console.log("Consumer binded to queue", this.id);
       this.channel.consume(q.queue, (msg) => {
         this.emitters.forEach(e => {
-          e.emit('message', msg);
+          e.emit('message', { chatId: this.id, data: msg });
         });
       })
     } catch (err) {
