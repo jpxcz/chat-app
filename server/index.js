@@ -19,7 +19,7 @@ app.post('/get-channel', (req, res) => {
   }).catch((reason) => {
     res.status(400);
     res.json({ error: `Could not connect to chat` })
-  })
+  });
 });
 
 app.post('/login', (req, res) => {
