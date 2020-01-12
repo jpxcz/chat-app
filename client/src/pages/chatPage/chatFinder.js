@@ -18,8 +18,9 @@ const Finder = ({ setCurrentChat }) => {
   const filteredList = chatList.filter(c => c.includes(chat))
   return (
     <div className="finder">
-      <input value={chat} onChange={filterChats} />
+      <input value={chat} onChange={filterChats} placeholder="find chat"/>
       <div className="chat-list">
+        Current Chats
         {
           filteredList.length ?
             filteredList.map((c) => {

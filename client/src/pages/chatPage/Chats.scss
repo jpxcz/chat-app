@@ -8,10 +8,70 @@
     flex-direction: row;
     padding: 5px;
     .finder {
-      flex: 1
+      flex: 1;
+      flex-direction: column;
+      input {
+        height: 20px;
+        border-radius: 5px;
+        margin: 5px;
+        padding: 5px
+      }
+      .chat-list {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        button {
+          margin: 5px;
+        }
+      }
     }
     .current-chat {
       flex: 5;
+      display: flex;
+      flex-direction: column;
+      h3 {
+        flex: 1;
+      }
+      .history-chat {
+        flex: 8;
+        overflow: auto;
+        .msg {
+          display: flex;
+          height: 30px;
+          align-items: center;
+          border: 1px solid gray;
+          border-radius: 5px;
+          margin: 5px;
+          .user {
+            flex: 1;
+            margin-left: 10px;
+          }
+          .text {
+            flex: 4;
+            text-align: left;
+          }
+        }
+      }
+      .input {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        input {
+          width: 70%;
+          height: 50%;
+          margin: 5px;
+          border-radius: 5px;
+          padding: 5px;
+        }
+        button {
+          width: 20%;
+          height: 50%;
+          margin: 5px;
+          border-radius: 5px;
+          padding: 5px;
+        }
+      }
     }
   }
 }
