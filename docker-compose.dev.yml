@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./server
     volumes:
-      - ./server:/app
+      - ./server/src:/app/src
     depends_on:
       - rabbit
   bot:
@@ -27,7 +27,7 @@ services:
       dockerfile: Dockerfile.dev
       context: ./bot
     volumes:
-      - ./bot:/app
+      - ./bot/src:/app/src
     depends_on:
       - rabbit
   client:
@@ -36,4 +36,5 @@ services:
       dockerfile: Dockerfile.dev
       context: ./client
     volumes:
-      - ./client:/app
+      - ./client/src:/app/src
+      - ./client/public:/app/public
