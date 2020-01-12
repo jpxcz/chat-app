@@ -20,6 +20,7 @@ class Session {
     console.log("Session getting chat", chatId)
     const consumer = this.consumer.getConsumer(chatId);
     consumer.addEmitter(this.emitter);
+    // consumer.readMessages(50);
   }
 
   consumerEvents() {

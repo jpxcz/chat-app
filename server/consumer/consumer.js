@@ -30,7 +30,7 @@ class Consumer {
   }
 
   addEmitter(emitter) {
-    if(this.emitters.includes(emitter)) {
+    if (this.emitters.includes(emitter)) {
       console.log("Emitter already exists!")
       return;
     }
@@ -48,7 +48,10 @@ class Consumer {
 
     try {
       const q = await this.channel.assertQueue(this.id, {
-        exclusive: true
+        exclusive: true,
+        arguments: {
+          "x-max-length": 50,
+        }
       });
       this.channel.bindQueue(q.queue, 'messages', this.id);
       console.log("Consumer binded to queue", this.id);
@@ -65,6 +68,17 @@ class Consumer {
       });
     }
   }
+  /*
+  async readMessages(n) {
+    console.log("Getting last 50 msgs");
+    if (!this.channel) return Error("consumer cannot read from queue. RabbitMQ not working");
+    this.channel.prefetch(50);
+    this.channel.get(this.id, )
+    this.channel.get(this.id, data => {
+      console.log(data)
+    })
+  }
+  */
 }
 
 
