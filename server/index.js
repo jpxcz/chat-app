@@ -43,8 +43,8 @@ app.post('/message', async (req, res) => {
   });
 });
 
-const server = app.listen(3000, () => {
-  console.log("Listenting on port 3000")
+const server = app.listen(5000, () => {
+  console.log("Listenting on port 5000")
 });
 
 const io = require('socket.io')(server).listen(server);

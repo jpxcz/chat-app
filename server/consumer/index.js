@@ -14,7 +14,7 @@ class Consumer {
   async startConsumer() {
     console.log("starting consumer");
     try {
-      const connection = await rabbit.connect('amqp://localhost', {
+      const connection = await rabbit.connect('amqp://rabbit', {
         username: 'guest',
         password: 'guest',
       });

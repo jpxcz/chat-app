@@ -14,11 +14,12 @@ class Publisher {
   async startPublisher() {
     console.log("starting publisher");
     try {
-      const connection = await rabbit.connect('amqp://localhost', {
-        username: 'guest',
-        password: 'guest',
+      const connection = await rabbit.connect('amqp://rabbit', {
+        username: 'admin',
+        password: 'nimda',
+        port: '15672'
       });
-
+      
       this.channel = await connection.createChannel();
       this.channel.assertExchange('messages', 'direct', { durable: false });
       console.log("Channel messages succesfully created")

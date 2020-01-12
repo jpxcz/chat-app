@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '8050:80'
+  rabbit:
+    hostname: rabbit
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./rabbit
+  api:
+    hostname: api
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - ./server/node_modules:/app/node_modules
+      - ./server:/app
+    depends_on:
+      - rabbit
+  client:
+    hostname: client
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - ./client/node_modules:/app/node_modules
+      - ./client:/app

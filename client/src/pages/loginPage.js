@@ -14,7 +14,7 @@ const LoginPage = () => {
     setAuthenticating(true);
     setError('');
     try {
-      const response = await fetch('/api/v1/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
