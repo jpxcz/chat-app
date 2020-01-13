@@ -28,7 +28,7 @@ const ChatPage = (props) => {
 
 
   const getChat = async (chat) => {
-    if (chat !== currentChat) {
+    if (chat && chat !== currentChat) {
       try {
         const response = await fetch('/api/find-channel', {
           method: 'POST',

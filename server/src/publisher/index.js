@@ -1,5 +1,6 @@
 //const Buffer = require('buffer');
 const rabbit = require('amqplib');
+const { RABBITMQ_USERNAME, RABBITMQ_PASSWORD } = require('../config');
 
 class Publisher {
   constructor() {
@@ -15,9 +16,9 @@ class Publisher {
     console.log("Starting Publisher");
     try {
       const connection = await rabbit.connect('amqp://rabbit', {
-        username: 'admin',
-        password: 'nimda',
-        port: '15672'
+        username: RABBITMQ_USERNAME,
+        password: RABBITMQ_PASSWORD,
+        // port: '15672'
       });
 
       this.channel = await connection.createChannel();

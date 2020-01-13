@@ -1,6 +1,7 @@
 const getCsv = require('get-csv');
 const rabbit = require('amqplib');
 const fetch = require('node-fetch');
+const { RABBITMQ_USERNAME, RABBITMQ_PASSWORD } = require('./config')
 
 class Consumer {
   constructor() {
@@ -17,8 +18,8 @@ class Consumer {
     console.log("starting consumer");
     try {
       const connection = await rabbit.connect('amqp://rabbit', {
-        username: 'guest',
-        password: 'guest',
+        username: RABBITMQ_USERNAME,
+        password: RABBITMQ_PASSWORD,
       });
 
       this.channel = await connection.createChannel();

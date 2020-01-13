@@ -19,6 +19,8 @@ services:
       context: ./server
     volumes:
       - ./server/src:/app/src
+    env_file:
+      - .env
     depends_on:
       - rabbit
   bot:
@@ -28,6 +30,8 @@ services:
       context: ./bot
     volumes:
       - ./bot/src:/app/src
+    env_file:
+      - .env
     depends_on:
       - rabbit
   client:

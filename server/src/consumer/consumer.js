@@ -1,4 +1,5 @@
 const rabbit = require('amqplib');
+const { RABBITMQ_USERNAME, RABBITMQ_PASSWORD } = require('../config');
 
 class Consumer {
   constructor(chatId) {
@@ -15,8 +16,8 @@ class Consumer {
     console.log("starting consumer");
     try {
       const connection = await rabbit.connect('amqp://rabbit', {
-        username: 'guest',
-        password: 'guest',
+        username: RABBITMQ_USERNAME,
+        password: RABBITMQ_PASSWORD,
       });
 
       this.channel = await connection.createChannel();
@@ -26,16 +27,6 @@ class Consumer {
     } catch (err) {
       console.warn("error starting the consumer");
       console.warn(err);
-    }
-  }
-
-  addEmitter(emitter) {
-    if (this.emitters.includes(emitter)) {
-      console.log("Emitter already exists!")
-      return;
-    }
-    else {
-      this.emitters.push(emitter);
     }
   }
 
@@ -68,6 +59,21 @@ class Consumer {
       });
     }
   }
+
+  /**
+   * 
+   * @param {events.event} emitter - Event handler
+   */
+  addEmitter(emitter) {
+    if (this.emitters.includes(emitter)) {
+      console.log("Emitter already exists!")
+      return;
+    }
+    else {
+      this.emitters.push(emitter);
+    }
+  }
+
   /*
   async readMessages(n) {
     console.log("Getting last 50 msgs");

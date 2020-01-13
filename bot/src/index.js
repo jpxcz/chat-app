@@ -1,9 +1,10 @@
 const http = require('http');
 const Bot = require('./consumer');
+const { BOT_PORT } = require('./config')
 
 const bot = new Bot()
 
 http.createServer(function (req, res) {
-  res.write("I'm alive!");
+  res.write("Bot has started");
   res.end();
-}).listen(6000);
+}).listen(BOT_PORT);

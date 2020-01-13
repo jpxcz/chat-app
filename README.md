@@ -8,6 +8,5 @@
 `docker-compose -f docker-compose.dev.yml up`
 
 ## TODO
-* ENV variables
 * Production docker-compose.yml
 * Historical Chat

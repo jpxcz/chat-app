@@ -23,6 +23,9 @@ class Session {
     // consumer.readMessages(50);
   }
 
+  /**
+   * Consumes the events that come from RabbitMQ and sends to the socket.io-client session
+   */
   consumerEvents() {
     this.emitter.on('message', ({chatId, data}) => {
       console.log("New message", chatId, data.content.toString())

@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const Publisher = require('./publisher')
 const SessionManager = require('./session');
+const { SERVER_PORT } = require('./config')
 
 const app = express();
 app.use(bodyParser());
@@ -10,8 +11,8 @@ const sessionManager = new SessionManager();
 const publisher = new Publisher();
 let chatRooms = [];
 
-const server = app.listen(5000, () => {
-  console.log("Listenting on port 5000")
+const server = app.listen(SERVER_PORT, () => {
+  console.log(`Listenting on port ${SERVER_PORT}`)
 });
 
 const io = require('socket.io')(server, {
@@ -46,16 +47,19 @@ app.post('/find-channel', (req, res) => {
   });
 });
 
+// login route
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
   console.log(`User ${username} asking for login`);
-  sessionManager.createNewSession(username, password).then(() => {
-    console.log(`User ${username} successfully logged in`);
-    res.sendStatus(200);
-  }).catch((err) => {
-    console.warn("Could not login user", username);
-    res.sendStatus(400);
-  });
+  if (true) { // could add user authentication here
+    sessionManager.createNewSession(username, password).then(() => {
+      console.log(`User ${username} successfully logged in`);
+      res.sendStatus(200);
+    }).catch((err) => {
+      console.warn("Could not login user", username);
+      res.sendStatus(400);
+    });
+  }
 });
 
 // post a new message for the publisher to send
