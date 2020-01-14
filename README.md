@@ -7,14 +7,14 @@
 ## Run development mode
 ``` sh
 cd chatApp
-docker-compose -f docker-compose.dev.yml up
+docker-compose -f docker-compose.dev.yml up --build
 ```
 On browser: localhost:8050
 
 ## Run production mode
 ``` sh
 cd chatApp
-docker-compose -f docker-compose.dev.yml up
+docker-compose -f docker-compose.yml up --build
 ```
 On browser: localhost:8050
 
